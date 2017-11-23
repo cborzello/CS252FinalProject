@@ -37,7 +37,7 @@ app.set('port', (process.env.PORT || 5000));  //Will set port to computers desig
 app.set("views", __dirname + "/Views");
 app.set("view engine", "ejs");
 
-var ServerController = require("./Controllers/ServerController.js");
+var ServerController = require("./controller.js");
 ServerController(app);
 
 app.listen(app.get('port'), function () {
