@@ -17,7 +17,7 @@ var cookieParser = require('cookie-parser');
   test = require('assert');
 // Connection url
 //@TODO add a valid url to var url in the line below
-//var url = ""
+var url = "mongodb://fulqrumPurdue:cs307sucks!@cs252cluster-shard-00-00-fsw0d.mongodb.net:27017,cs252cluster-shard-00-01-fsw0d.mongodb.net:27017,cs252cluster-shard-00-02-fsw0d.mongodb.net:27017/test?ssl=true&replicaSet=CS252Cluster-shard-0&authSource=admin"
 // Connect using MongoClient
 MongoClient.connect(url, function(err, db) {
   assert.equal(null, err);
