@@ -11,40 +11,28 @@
  var MongoClient = require('mongodb').MongoClient,
  test = require('assert');
 // Connection url
-var url = "mongodb://fulqrumPurdue:cs307sucks!@fulqrumcluster-shard-00-00-o5o8f.mongodb.net:27017,fulqrumcluster-shard-00-01-o5o8f.mongodb.net:27017,fulqrumcluster-shard-00-02-o5o8f.mongodb.net:27017/test?ssl=true&replicaSet=fulqrumCluster-shard-0&authSource=admin";
+var url = "mongodb://fulqrumPurdue:cs307sucks!@cs252cluster-shard-00-00-fsw0d.mongodb.net:27017,cs252cluster-shard-00-01-fsw0d.mongodb.net:27017,cs252cluster-shard-00-02-fsw0d.mongodb.net:27017/test?ssl=true&replicaSet=CS252Cluster-shard-0&authSource=admin"
+var TokenGenerator = require("rand-token");
 
 
-
-var randtoken = require('rand-token');
-
-exports.encryptPassword = encryptPassword;
-function encryptPassword(password, cb) {
-    // a basic caesar cypher
-    //return password.replace(/[A-Z]/g, L => String.fromCharCode((L.charCodeAt(0) % 26) + 65));
-    var out = "";
-    for (var i = 0; i < password.length; i++) {
-        out += String.fromCharCode(password[i].charCodeAt(0)+3);
-
-    }
-    cb(out);
-}
-
-exports.registerCompany = registerCompany;
-function registerCompany(company, callback) {
+exports.registerUser = registerUser;
+function registerUser(user, callback) {
 
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
     
-        db.collection('companies').findOne( { "name": company.name, "password" : company.password }, function(err, result) {
+        db.collection('users').findOne( { "email": user.email}, function(err, result) {
             if(result == null) {
-                //Company doesn't exist
-                db.collection('companies').insertOne(company, function(err, result) {
-                    console.log("Company Inserted");
-                    callback(false);
+                //User email doesn't exist create their login token
+                user.loginToken = TokenGenerator.generate(16);
+                
+                db.collection('users').insertOne(user, function(err, result) {
+                    console.log("New User Account created");
+                    callback();
                 });
             }else {
-                //Company exists
-                callback("CompanyAlreadyExists");
+                //User email already exists
+                callback("Email already Registered");
             }
         });
     });
@@ -53,45 +41,40 @@ function registerCompany(company, callback) {
 }
 
 exports.login = login;
-function login(username, password, cb) {
+function login(email, password, cb) {
     //Verify credentials
-    encryptPassword(password, function(encryptedPassword) {
         MongoClient.connect(url, function(err, db) {
             assert.equal(null, err);
         
-            db.collection('companies').findOne( { "username": username, "password" : encryptedPassword }, function(err, result) {
-                //if(result === null) {
-                  //  result = "NONE";
-                //}
+            db.collection('user').findOne( { "email": email, "password" : password }, function(err, result) {
                 cb(result);
             });
         });
-    });
     
 
 }
 
-exports.getCompany = getCompany;
-function getCompany(token, cb) {
+exports.getUser = getUser;
+function getUser(token, cb) {
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
     
-        db.collection('companies').findOne( { "token": token }, function(err, result) {
+        db.collection('users').findOne( { "token": token }, function(err, result) {
             if(result === null || result === undefined) {
-                //Company doesn't exist
+                //User doesn't exist
                 cb(null);
             }else {
-                //Company exists
+                //User exists
                 cb(result);
             }
         });
     });
 }
 
-exports.listCompanies = listCompanies;
-function listCompanies() {
-    var findCompanies = function(db, callback) {
-        var cursor =db.collection('companies').find( );
+exports.listUsers = listUsers;
+function listUsers() {
+    var findUsers = function(db, callback) {
+        var cursor =db.collection('users').find( );
         cursor.each(function(err, doc) {
            assert.equal(err, null);
            if (doc != null) {
@@ -103,7 +86,7 @@ function listCompanies() {
      };
      MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        findCompanies(db, function() {
+        findUsers(db, function() {
             db.close();
         });
       });
@@ -113,7 +96,7 @@ function listCompanies() {
 exports.clearDatabase = clearDatabase;
 function clearDatabase() {
     var removeAll = function(db, callback) {
-        db.collection('companies').deleteMany( {}, function(err, results) {
+        db.collection('users').deleteMany( {}, function(err, results) {
            callback();
         });
      };
@@ -126,12 +109,12 @@ function clearDatabase() {
     });
 }
 
-exports.updateCompany = updateCompany;
-function updateCompany(company, cb){
+exports.updateUser = updateUser;
+function updateUser(user, cb){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        db.collection('companies').update({_id:company._id}, company, function() {
-            console.log("Company Updated");
+        db.collection('user').update({_id:user._id}, user, function() {
+            console.log("User Updated");
             db.close();
             cb();
         });
