@@ -16,7 +16,14 @@ var TokenGenerator = require("rand-token");
 
 
 exports.registerUser = registerUser;
-function registerUser(user, callback) {
+function registerUser(body, callback) {
+    var user = new Object();
+    user.email = body.email;
+    user.password = body.password;
+    user.streetAddress = body.streetAddress;
+    user.state = body.state;
+    user.zipcode = body.zipcode;
+    user.country = body.country;
 
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
@@ -32,6 +39,7 @@ function registerUser(user, callback) {
                 });
             }else {
                 //User email already exists
+                console.log("Email already has account");
                 callback("Email already Registered");
             }
         });
@@ -46,7 +54,7 @@ function login(email, password, cb) {
         MongoClient.connect(url, function(err, db) {
             assert.equal(null, err);
         
-            db.collection('user').findOne( { "email": email, "password" : password }, function(err, result) {
+            db.collection('users').findOne( { "email": email, "password" : password }, function(err, result) {
                 cb(result);
             });
         });
@@ -59,11 +67,14 @@ function getUser(token, cb) {
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
     
-        db.collection('users').findOne( { "token": token }, function(err, result) {
+        db.collection('users').findOne( { "loginToken": token }, function(err, result) {
+            console.log(token);
             if(result === null || result === undefined) {
                 //User doesn't exist
+                console.log("User not found");
                 cb(null);
             }else {
+                console.log("User found");
                 //User exists
                 cb(result);
             }
