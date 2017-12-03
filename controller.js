@@ -45,12 +45,12 @@ module.exports = function(app) {
         Database.login(request.body.email, request.body.password, function(user) {
             if(user === null) {
                 response.clearCookie("loginToken");
-                
+
                 //Invalid login credentials
                 response.render("welcome");
             }else {
                 //user found
-                response.clearCookie("loginToken");                
+                response.clearCookie("loginToken");
                 response.cookie("loginToken", user.loginToken);
                 console.log("Login Token= " + user.loginToken);
                 response.redirect("/");
@@ -77,9 +77,14 @@ module.exports = function(app) {
         response.render("weatherExample", {type:type});
     });
 
+    app.get("/weather", function(request, response){
+      var type = request.body.type;
+      response.render("weather", {type:type});
+    });
+
     app.get("*", function(request, response) {
         response.redirect("/");
     });
 
-    
+
 };
