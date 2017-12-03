@@ -1,6 +1,49 @@
 <% include partials/header %>
+<link rel="stylesheet" href="video.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
 
 
-Homepage
+
+
+<!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
+<video autoplay loop id="video-background" muted plays-inline>
+<%var url;
+  if(type === null || type === undefined) {
+      type = "snowy";
+  }
+  switch(type) {
+    case "sunny":
+        url = "videos/sunnyBackground.mp4";
+        break;
+    case "cloudy":
+        url = "videos/cloudyBackground.mp4";
+        break;
+    case "rainy":
+        url = "videos/rainyBackground.mp4";
+        break;
+    case "stormy":
+        url = "videos/stormyBackground.mp4";
+        break;
+    case "snowy":
+        url = "videos/snowyBackground.mp4";
+        break;
+    case "haily":
+    url = "videos/hailyBackground.mp4";
+      break;
+    default:
+        url = "videos/cloudyBackground.mp4";
+
+}
+
+
+%>
+<source src=<%-url%> type="video/mp4">
+</video>
+
+
+
 
 <% include partials/footer %>

@@ -15,7 +15,8 @@ module.exports = function(app) {
                         response.render("welcome");
                     }else {
                         //User exists
-                        response.render("video");
+                        var type;
+                        response.render("homepage", {type:type});
 
                     }
                 });
