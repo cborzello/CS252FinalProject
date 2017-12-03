@@ -1,4 +1,5 @@
 var Database = require("./Models/Database.js");
+var Weather = require("./Models/Weather.js");
 
 module.exports = function(app) {
     app.get("/", function(request, response) {
@@ -79,7 +80,10 @@ module.exports = function(app) {
 
     app.get("/weather", function(request, response){
       var type = request.body.type;
-      response.render("weather", {type:type});
+      var latitude = request.body.latitude;
+      var longitude = request.body.longitude;
+      var api_data = Weather.weatherReport(latitude, longitude);
+      response.render("weather", api_data);
     });
 
     app.get("*", function(request, response) {
