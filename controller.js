@@ -1,4 +1,5 @@
 var Database = require("./Models/Database.js");
+//var Weather = require("./Models/Weather.js");
 
 module.exports = function(app) {
     app.get("/", function(request, response) {
@@ -46,12 +47,12 @@ module.exports = function(app) {
         Database.login(request.body.email, request.body.password, function(user) {
             if(user === null) {
                 response.clearCookie("loginToken");
-                
+
                 //Invalid login credentials
                 response.render("welcome");
             }else {
                 //user found
-                response.clearCookie("loginToken");                
+                response.clearCookie("loginToken");
                 response.cookie("loginToken", user.loginToken);
                 console.log("Login Token= " + user.loginToken);
                 response.redirect("/");
@@ -177,5 +178,5 @@ module.exports = function(app) {
         response.redirect("/");
     });
 
-    
+
 };
