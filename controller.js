@@ -15,7 +15,7 @@ module.exports = function(app) {
                         response.render("welcome");
                     }else {
                         //User exists
-                        response.render("homepage");
+                        response.render("video");
 
                     }
                 });
@@ -63,4 +63,23 @@ module.exports = function(app) {
         response.clearCookie("loginToken");
         response.redirect("/");
     });
+
+    app.get("/examplePage", function(request, response) {
+        console.log(request.body);
+        var type = request.body.type;
+        console.log(type);
+        response.render("weatherExample", {type:type});
+    });
+    app.post("/examplePage", function(request, response) {
+        console.log(request.body);
+        var type = request.body.type;
+        console.log(type);
+        response.render("weatherExample", {type:type});
+    });
+
+    app.get("*", function(request, response) {
+        response.redirect("/");
+    });
+
+    
 };
