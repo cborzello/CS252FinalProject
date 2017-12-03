@@ -1,4 +1,46 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Nimbus</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
+    integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <html lang="en">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="A free to use customer service analytics web application" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+
+    <header>
+      <div class="container">
+        <nav class="navbar navbar-expand-md">
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav11" aria-controls="navbarNav11" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarNav11">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/analytics">Weather</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="settings">Settings</a>
+              </li>
+            </ul>
+
+            <a class="btn btn-primary btn-empty ml-md-3" href="/logout">Logout</a>
+          </div>
+        </nav>
+      </div>
+    </header>
+</head>
+<body>
+
 
 
   <div id="container" class="container">
@@ -12,7 +54,7 @@
             <div class="panel-body">
               <div class="form-group">
                 <div class="col-sm-10">
-                  <input  class="form-control" name="email" id="new_username">
+                  <input  class="form-control" name="email" placeholder="Email" id="new_username">
                 </div>
               </div>
             </div>
@@ -38,7 +80,7 @@
           <div class="panel-body">
             <div class="form-group">
               <div class="col-sm-10">
-                <input type="password" class="form-control" name="password" id="new_username">
+                <input type="password" placeholder="Password" class="form-control" name="password" id="new_username">
               </div>
             </div>
           </div>
@@ -61,49 +103,56 @@
             </div>
             <div class="panel-body">
               <div class="form-group">
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="password" id="new_password">
-                </div>
+                <div class="panel-body">
+                    <div class="form-group">
+                      <div class="col-sm-10">
+                        <input  class="form-control" name="streetAddress" placeholder="Street Address" id="new_username">
+                      </div>
+                    </div>
+                  </div>
               </div>
             </div>
-          </div>
-
-
             <div class="panel-body">
-              <div class="form-group">
-                <div class="pull-left">
-                  <input type="submit" class="form-control btn btn-primary" name="submit" id="submit">
+                <div class="form-group">
+                  <div class="col-sm-10">
+                    <input  class="form-control" name="city" placeholder="City" id="new_username">
+                  </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                  <div class="col-sm-10">
+                    <input  class="form-control" name="state" placeholder="State" id="new_username">
+                  </div>
                 </div>
               </div>
-            </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <div class="col-sm-10">
+                    <input  class="form-control" name="zipzode" placeholder="Zipcode" id="new_username">
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <div class="col-sm-10">
+                    <input  class="form-control" name="country" placeholder="Country" id="new_username">
+                  </div>
+                </div>
+              </div>
+              <div class="panel-body">
+                <div class="form-group">
+                  <div class="pull-left">
+                    <input type="submit" class="form-control btn btn-primary" name="submit" id="submit">
+                  </div>
+                </div>
+              </div>
+          </div>
 
         </form>
         <br /><br />
         <br />
         <br />
-        
-        <form action="/emailPreferenceSettings" method="POST">
-          <div class="panel-heading">
-            <h3 class="panel-title"><label for="confirm_password" class="control-label panel-title">I would like to receive emails</label></h3>
-          </div>
-          <div class="panel-body">
-            <div class="form-group">
-              <div class="col-sm-10">
-                  <input name="sendEmails" value='on' type="checkbox"  class="form-check-input">
-                </div>
-            </div>
-        </div>
-
-
-          <div class="panel-body">
-            <div class="form-group">
-              <div class="pull-left">
-                <input type="submit" class="form-control btn btn-primary" name="submit" id="submit">
-              </div>
-            </div>
-          </div>
-
-      </form>
 
 
       </div>

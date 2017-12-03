@@ -21,6 +21,7 @@ function registerUser(body, callback) {
     user.email = body.email;
     user.password = body.password;
     user.streetAddress = body.streetAddress;
+    user.city = body.city;
     user.state = body.state;
     user.zipcode = body.zipcode;
     user.country = body.country;
@@ -124,7 +125,7 @@ exports.updateUser = updateUser;
 function updateUser(user, cb){
     MongoClient.connect(url, function(err, db) {
         assert.equal(null, err);
-        db.collection('user').update({_id:user._id}, user, function() {
+        db.collection('users').update({_id:user._id}, user, function() {
             console.log("User Updated");
             db.close();
             cb();

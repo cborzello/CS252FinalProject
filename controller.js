@@ -77,6 +77,101 @@ module.exports = function(app) {
         response.render("weatherExample", {type:type});
     });
 
+    app.get("/settings", function(request, response) {
+        var loginToken = request.cookies.loginToken;
+        if(loginToken === undefined) {
+            //User is not logged in
+            response.render("welcome");
+        }else {
+            Database.getUser(loginToken, function(user) {
+                if(user === undefined || user === null) {
+                    //invalid loginToken
+                    response.clearCookie("loginToken");
+                    response.render("welcome");
+                }else {
+                    //User exists
+                    response.render("settings");
+
+                }
+            });
+        }
+    });
+
+    app.post("/emailSettings", function(request, response) {
+        var loginToken = request.cookies.loginToken;
+        if(loginToken === undefined) {
+            //User is not logged in
+            response.render("welcome");
+        }else {
+            Database.getUser(loginToken, function(user) {
+                if(user === undefined || user === null) {
+                    //invalid loginToken
+                    response.clearCookie("loginToken");
+                    response.render("welcome");
+                }else {
+                    //User exists
+                    user.email = request.body.email;
+                    Database.updateUser(user, function() {
+                        response.render("settings");
+                    });
+
+                }
+            });
+        }
+    });
+
+    app.post("/passwordSettings", function(request, response) {
+        var loginToken = request.cookies.loginToken;
+        if(loginToken === undefined) {
+            //User is not logged in
+            response.render("welcome");
+        }else {
+            Database.getUser(loginToken, function(user) {
+                if(user === undefined || user === null) {
+                    //invalid loginToken
+                    response.clearCookie("loginToken");
+                    response.render("welcome");
+                }else {
+                    //User exists
+                    user.password = request.body.password;
+                    Database.updateUser(user, function(){
+                        response.render("settings");                        
+                    });
+
+                }
+            });
+        }
+    });
+
+    app.post("/addressSettings", function(request, response) {
+        var loginToken = request.cookies.loginToken;
+        if(loginToken === undefined) {
+            //User is not logged in
+            response.render("welcome");
+        }else {
+            Database.getUser(loginToken, function(user) {
+                if(user === undefined || user === null) {
+                    //invalid loginToken
+                    response.clearCookie("loginToken");
+                    response.render("welcome");
+                }else {
+                    //User exists
+                    user.streetAddress = request.body.streetAddress;
+                    user.city = request.body.city;
+                    user.state = request.body.state;
+                    user.zipcode = request.body.zipcode;
+                    user.country = request.body.country;
+                    
+                    Database.updateUser(user, function(){
+                        response.render("settings");                        
+                    });
+
+                }
+            });
+        }
+    });
+
+
     app.get("*", function(request, response) {
         response.redirect("/");
     });
