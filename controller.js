@@ -1,4 +1,5 @@
 var Database = require("./Models/Database.js");
+var api = require("./Models/api.js");
 //var Weather = require("./Models/Weather.js");
 
 module.exports = function(app) {
@@ -16,8 +17,14 @@ module.exports = function(app) {
                         response.render("welcome");
                     }else {
                         //User exists
-                        var type;
-                        response.render("homepage", {type:type});
+                        var lattitude = "-71.0589";
+                        
+                        var longitude = "42.3601";
+                        DarkSky.getWeather(lattitude, longitude, function(weather){
+                            var type = "cloudy";
+                            console.dir(weather);
+                            response.render("homepage", {type: type});                            
+                        });
 
                     }
                 });
