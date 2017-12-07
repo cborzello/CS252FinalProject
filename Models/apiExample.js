@@ -23,7 +23,11 @@ function testDarkSky() {
     console.log("Lattitude:" + lattitude + "\nLongitude: " + longitude);
     api.getWeather(lattitude, longitude, function(weather){
       weather= JSON.parse(weather);
-        console.log(weather["hourly"]["summary"]);
+      //for(var i = 0; i <weather["hourly"]["data"].length;i++ ){
+        //console.log("Hour " + i + ": " + weather["hourly"]["data"][i]["time"]);
+        console.log(weather["daily"]["data"][0]["precipType"]);
+        
+      //}
     });
   });
 }
