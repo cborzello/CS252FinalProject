@@ -18,7 +18,6 @@ exports.getCoordinates = getCoordinates;
 function getCoordinates(city, state, cb) {
     var urlFormat = "https://maps.googleapis.com/maps/api/geocode/json?parameters";
     var key = "AIzaSyC0KbXSKVMu3kTYlDUp6v43iUZ7TnyzQXc";
-
     var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + ",+" + state + "&key=" + key;
 
     request(url, function(error, response, body){
