@@ -13,6 +13,7 @@ function getWeather(lattitude, longitude, cb){
     });
 
 }
+
 exports.getCoordinates = getCoordinates;
 function getCoordinates(city, state, cb) {
     var urlFormat = "https://maps.googleapis.com/maps/api/geocode/json?parameters";
