@@ -1,49 +1,176 @@
-<% include partials/header %>
-<link rel="stylesheet" href="video.css">
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css"
-integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-<link href='https://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-
-
-
-
-<!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
-<video autoplay loop id="video-background" muted plays-inline>
-<%var url;
-  if(type === null || type === undefined) {
-      type = "snowy";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Homepage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <style>
+    html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
   }
-  switch(type) {
-    case "sunny":
-        url = "videos/sunnyBackground.mp4";
-        break;
-    case "cloudy":
-        url = "videos/cloudyBackground.mp4";
-        break;
-    case "rainy":
-        url = "videos/rainyBackground.mp4";
-        break;
-    case "stormy":
-        url = "videos/stormyBackground.mp4";
-        break;
-    case "snowy":
-        url = "videos/snowyBackground.mp4";
-        break;
-    case "haily":
-    url = "videos/hailyBackground.mp4";
-      break;
-    default:
-        url = "videos/cloudyBackground.mp4";
+    .jumbotron{
+      position: relative;
+      overflow: hidden;
+      height: 200px;
+      z-index: 0;
+      min-height: 500px;
+      margin: 0px;
+
+   }
+   
+   .container {
+     position: relative;
+     color: #ffffff;
+     z-index: 2; /* Show content above video */
+   }
+   
+   #video-background{ 
+     position: absolute;
+     height: auto;
+     width: 100%;
+     min-height: 100%;
+     min-width: 100%;
+     left: 50%;
+     top: 50%;
+     -webkit-transform: translate3d(-50%, -50%, 0);
+     transform: translate3d(-50%, -50%, 0);
+     z-index: 1;
+   }
+   #summary{
+    background-color:rgba(0, 0, 0, 0.5);
+    font-family: Tahoma, Geneva, sans-serif;
+    font-size: 30px;
+   }
+
+   #details{
+    background:#49B293;
+    bottom: 0;
+    min-height: 100%;
+   }
+   #imaginary_container{
+    margin-top:20%; /* Don't copy this */
+}
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+#form{
+  display: inline;
 
 }
 
+  </style>
+</head>
+<body>
+    <%var url;
+    if(icon === null || icon === undefined) {
+        icon = "cloudy";
+    }
+    switch(icon) {
+      case "clear-day":
+          url = "videos/clearDay.mp4";
+          break;
+      case "clear-night":
+          url = "videos/clearNight.mp4";
+          break;
+      case "rain":
+          url = "videos/rain.mp4";
+          break;
+      case "snow":
+          url = "videos/snow.mp4";
+          break;
+      case "sleet":
+          url = "videos/sleet.mp4";
+          break;
+      case "wind":
+      url = "videos/windy.mp4";
+        break;
+      case "fog":
+      url = "videos/fog.mp4";
+        break;
+      case "cloudy":
+      url = "videos/cloudy.mp4";
+        break;
+      case "partly-cloudy-day":
+      url = "videos/partlyCloudyDay.mp4";
+        break;
+      case "partly-cloudy-night":
+      url = "videos/cloudyNight.mp4";
+        break;
+      case "hail":
+      url = "videos/hail.mp4";
+        break;
+      case "thunderstorm":
+      url = "videos/thunderstorm.mp4";
+        break;
+      case "tornado":
+      url = "videos/tornado.mp4";
+        break;
+      default:
+          url = "videos/cloudy.mp4";
 
-%>
-<source src=<%-url%> type="video/mp4">
-</video>
+  }
 
 
+  %>
+  
+<div class="jumbotron" style:"z-index:-101;">
+  <div class="container text-center" id="summary" >
+      
+      
+        <h1><%-currentTemperature%>&#8457</h1>
+    <h2><%-precipitationChance%>% chance of <%-precipitationType%></h2>
+    <p><%-hourlySummary%></p>
+    <div class="container">
+        <div class="row">
+              <div class="col-sm-6 col-sm-offset-3">
+                  <div id="imaginary_container"> 
+                      <form action="http://www.google.com/search" class="searchform" method="get" name="searchform" target="_blank">
+                        <div class="input-group stylish-input-group">
+                          
+                          <input type="text" class="form-control" name="q" placeholder="GoogleSearch" >
+                          <span class="input-group-addon">
+                              <button type="submit">
+                                  <span class="glyphicon glyphicon-search"></span>
+                              </button>  
+                          </span>
+                      </div>
+                    </form>
+                    
+                  </div>
+              </div>
+        </div>
+      </div>
+  </div>
+      <video class="weatherBackground" autoplay loop id="video-background" muted plays-inline>
+        <source src="<%-url%>" type="video/mp4">
+      </video>
+</div>
+  
+<div class="container-fluid text-center" id="details">    
+  <h3></h3><br>
+  <div class="row">
+      <iframe id="forecast_embed" frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=<%-lattitude%>&lon=<%-longitude%>&name=<%-city%>"></iframe>
+      
+      
+  </div>
+  <a class="" href="/" style:"max-width:50px;">View In-depth Analysis</a>              
+  
+</div>
+<br>
 
-
-<% include partials/footer %>
+</body>
+</html>

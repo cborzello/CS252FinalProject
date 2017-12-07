@@ -1,6 +1,7 @@
 var Database = require("./Models/Database.js");
 var api = require("./Models/api.js");
 //var Weather = require("./Models/Weather.js");
+//Database.clearDatabase();
 
 module.exports = function(app) {
     app.get("/", function(request, response) {
@@ -25,8 +26,22 @@ module.exports = function(app) {
                           var longitude = result["results"][0]["geometry"]["location"]["lng"];
                           console.log("Lattitude:" + lattitude + "\nLongitude: " + longitude);
                           api.getWeather(lattitude, longitude, function(weather){
-                              var type = "cloudy";
-                              response.render("homepage", {type: type});
+                              weather = JSON.parse(weather);
+                              var hourlySummary= weather["daily"]["data"][0]["summary"];
+                              var icon= weather["hourly"]["data"][0]["icon"];
+                              var currentTemperature = Math.round(parseFloat(weather["hourly"]["data"][0]["temperature"]));
+                              var precipitationType = weather["daily"]["data"][0]["precipType"];
+                              if(precipitationType === undefined){
+                                  precipitationType= "Precipitation";
+                              }
+                              var precipitationChance = weather["daily"]["data"][0]["precipProbability"];
+                              precipitationChance= 100*parseFloat(precipitationChance);
+                              console.log(icon);
+                              
+                              response.render("homepage", {precipitationChance:precipitationChance, 
+                                precipitationType:precipitationType ,city:user.city, lattitude:lattitude, 
+                                longitude:longitude, currentTemperature:currentTemperature,icon:icon, 
+                                hourlySummary:hourlySummary});
                           });
                         });
 
@@ -81,15 +96,15 @@ module.exports = function(app) {
 
     app.get("/examplePage", function(request, response) {
         console.log(request.body);
-        var type = request.body.type;
-        console.log(type);
-        response.render("weatherExample", {type:type});
+        var icon = request.body.icon;
+        console.log(icon);
+        response.render("weatherExample", {icon:icon});
     });
     app.post("/examplePage", function(request, response) {
         console.log(request.body);
-        var type = request.body.type;
-        console.log(type);
-        response.render("weatherExample", {type:type});
+        var icon = request.body.icon;
+        console.log(icon);
+        response.render("weatherExample", {icon:icon});
     });
 
     app.get("/settings", function(request, response) {

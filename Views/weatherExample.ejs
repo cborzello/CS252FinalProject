@@ -16,47 +16,75 @@
 
 <!--  Video is muted & autoplays, placed after major DOM elements for performance & has an image fallback  -->
 <video autoplay loop id="video-background" muted plays-inline>
-    <%var url;
-      if(type === null || type === undefined) {
-          type = "snowy";
+        <%var url;
+        if(icon === null || icon === undefined) {
+            icon = "cloudy";
+        }
+        switch(icon) {
+          case "clear-day":
+              url = "videos/clearDay.mp4";
+              break;
+          case "clear-night":
+              url = "videos/clearNight.mp4";
+              break;
+          case "rain":
+              url = "videos/rain.mp4";
+              break;
+          case "snow":
+              url = "videos/snow.mp4";
+              break;
+          case "sleet":
+              url = "videos/sleet.mp4";
+              break;
+          case "wind":
+          url = "videos/windy.mp4";
+            break;
+          case "fog":
+          url = "videos/fog.mp4";
+            break;
+          case "cloudy":
+          url = "videos/cloudy.mp4";
+            break;
+          case "partly-cloudy-day":
+          url = "videos/partlyCloudyDay.mp4";
+            break;
+          case "partly-cloudy-night":
+          url = "videos/cloudyNight.mp4";
+            break;
+          case "hail":
+          url = "videos/hail.mp4";
+            break;
+          case "thunderstorm":
+          url = "videos/thunderstorm.mp4";
+            break;
+          case "tornado":
+          url = "videos/tornado.mp4";
+            break;
+          default:
+              url = "videos/cloudy.mp4";
+    
       }
-      switch(type) {
-        case "sunny":
-            url = "videos/sunnyBackground.mp4";
-            break;
-        case "cloudy":
-            url = "videos/cloudyBackground.mp4";
-            break;
-        case "rainy":
-            url = "videos/rainyBackground.mp4";
-            break;
-        case "stormy":
-            url = "videos/stormyBackground.mp4";
-            break;
-        case "snowy":
-            url = "videos/snowyBackground.mp4";
-            break;
-        case "haily":
-        url = "videos/hailyBackground.mp4";
-          break;
-        default:
-            url = "videos/cloudyBackground.mp4";
-
-    }
-
-
-    %>
+    
+    
+      %>
   <source src=<%-url%> type="video/mp4">
 </video>
 <form method="POST" action="/examplePage">
-    <select name="type" required>
+    <select name="icon" required>
         <option value="">Select Weather Type</option>
-        <option value="sunny">sunny</option>
+        <option value="clear-day">clear-day</option>
+        <option value="clear-night">cloudy</option>
+        <option value="rain">rain</option>
+        <option value="snow">snow</option>
+        <option value="sleet">sleet</option>
+        <option value="wind">wind</option>
+        <option value="fog">fog</option>
         <option value="cloudy">cloudy</option>
-        <option value="rainy">rainy</option>
-        <option value="stormy">stormy</option>
-        <option value="snowy">snowy</option>
-        <option value="haily">haily</option>
+        <option value="partly-cloudy-day">partly-cloudy-day</option>
+        <option value="partly-cloudy-night">partly-cloudy-night</option>
+        <option value="hail">hail</option>
+        <option value="thunderstorm">thunderstorm</option>
+        <option value="tornado">tornado</option>
 
     </select>
 
