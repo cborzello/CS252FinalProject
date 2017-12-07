@@ -23,7 +23,7 @@ function testDarkSky() {
     console.log("Lattitude:" + lattitude + "\nLongitude: " + longitude);
     api.getWeather(lattitude, longitude, function(weather){
       weather= JSON.parse(weather);
-        console.log(weather);
+        console.log(weather["hourly"]["summary"]);
     });
   });
 }
