@@ -17,14 +17,20 @@ module.exports = function(app) {
                         response.render("welcome");
                     }else {
                         //User exists
-                        var lattitude = "-71.0589";
-                        
-                        var longitude = "42.3601";
-                        DarkSky.getWeather(lattitude, longitude, function(weather){
-                            var type = "cloudy";
-                            console.dir(weather);
-                            response.render("homepage", {type: type});                            
+                        var state = user.state;
+                        var city = user.city;
+                        api.getCoordinates(city, state, function(result) {
+                          result=JSON.parse(result);
+                          var lattitude = result["results"][0]["geometry"]["location"]["lat"];
+                          var longitude = result["results"][0]["geometry"]["location"]["lng"];
+                          console.log("Lattitude:" + lattitude + "\nLongitude: " + longitude);
+                          api.getWeather(lattitude, longitude, function(weather){
+                              var type = "cloudy";
+                              response.render("homepage", {type: type});
+                          });
                         });
+
+
 
                     }
                 });
@@ -144,7 +150,7 @@ module.exports = function(app) {
                     //User exists
                     user.password = request.body.password;
                     Database.updateUser(user, function(){
-                        response.render("settings");                        
+                        response.render("settings");
                     });
 
                 }
@@ -170,9 +176,9 @@ module.exports = function(app) {
                     user.state = request.body.state;
                     user.zipcode = request.body.zipcode;
                     user.country = request.body.country;
-                    
+
                     Database.updateUser(user, function(){
-                        response.render("settings");                        
+                        response.render("settings");
                     });
 
                 }

@@ -11,15 +11,14 @@ function getWeather(lattitude, longitude, cb){
     request(url, function(error, response, body){
         cb(body);
     });
-    
+
 }
 exports.getCoordinates = getCoordinates;
-function getCoordinates(address, cb) {
-    var urlFormat = "http://maps.googleapis.com/maps/api/geocode/json?parameters";
-    var key = "google api key for geocode";
-    var city;
-    var state;
-    var url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + city + ",+" + state + "&key=" + key;
+function getCoordinates(city, state, cb) {
+    var urlFormat = "https://maps.googleapis.com/maps/api/geocode/json?parameters";
+    var key = "AIzaSyC0KbXSKVMu3kTYlDUp6v43iUZ7TnyzQXc";
+
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + city + ",+" + state + "&key=" + key;
 
     request(url, function(error, response, body){
         cb(body);
