@@ -5,7 +5,7 @@ A basic weather dashboard website which can:
 - let you see a weekly forecast for each day
 - view an embedded map from DarkSky which has more detailed, global weather information
 
-#Screenshot
+## Screenshot
 ![Screenshot](https://github.com/cborzello/CS252FinalProject/blob/master/Views/imgs/screenshot.PNG)
 ## Usage
 
