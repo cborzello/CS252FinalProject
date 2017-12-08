@@ -1,19 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <title>Homepage</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <style>
     html,
     body {
       height: 100%;
       width: 100%;
-      overflow: hidden;
     }
 
     .jumbotron {
@@ -29,7 +18,7 @@
     .container {
       position: relative;
       color: #ffffff;
-      min-height: 175px;
+      min-height: 150px;
       z-index: 2;
       /* Show content above video */
     }
@@ -60,7 +49,11 @@
     }
 
     #imaginary_container {
-      margin-top: 10%;
+      margin-top: 7.5%;
+    }
+
+    #header {
+      max-height:50px;
     }
 
     .stylish-input-group .input-group-addon {
@@ -83,9 +76,7 @@
 
     }
   </style>
-</head>
 
-<body>
   <%var url;
     if(icon === null || icon === undefined) {
         icon = "cloudy";
@@ -132,20 +123,16 @@
         break;
       default:
           url = "videos/cloudy.mp4";
-
-  }
-
-
+        }
   %>
 
     <div class="jumbotron" style: "z-index:-101;">
       <div class="container text-center" id="summary">
-
-
         <h1><%-currentTemperature%>°F</h1>
         <h2><%-precipitationChance%>% chance of <%-precipitationType%></h2>
-        <p>
-          <%-hourlySummary%>
+        <p> <%-hourlySummary%> </p>
+        <p style="font-size:12px">
+          <b>Powered by DarkSky.</b>
         </p>
         <div class="container">
           <div class="row">
@@ -174,8 +161,8 @@
     <div class="container-fluid text-center" id="details">
       <h3></h3>
       <div class="row">
-        <iframe id="forecast_embed" frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=<%-lattitude%>&lon=<%-longitude%>&name=<%-city%>"></iframe>
+        <iframe id="forecast_embed" frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=<%-latitude%>&lon=<%-longitude%>&name=<%-city%>"></iframe>
+        <script src='https://darksky.net/map-embed/@temperature,39.000,-95.000,4.js?embed=true&timeControl=true&fieldControl=true&defaultField=temperature&defaultUnits=_f'></script>
       </div>
-      <a class="" href="/" style: "max-width:50px;">View In-depth Analysis</a>
     </div>
 <%include partials/footer%>
